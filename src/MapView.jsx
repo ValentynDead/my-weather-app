@@ -302,4 +302,4 @@ export const MapView = ({ lat = 49.44, lon = 32.06 }) => {
       `}</style>
     </Box>
   );
-};
+};// For mentor review

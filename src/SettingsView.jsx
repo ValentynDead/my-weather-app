@@ -380,4 +380,4 @@ export const SettingsView = ({ isDark, onToggleTheme }) => {
       </div>
     </div>
   );
-};
+};// For mentor review
