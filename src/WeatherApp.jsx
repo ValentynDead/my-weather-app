@@ -98,17 +98,43 @@ const BottomNav = ({ activeTab, setActiveTab, t }) => (
 );
 
 const WeatherApp = () => {
-  const [mode,       setMode]       = useState('dark');
+  // ── Стан з localStorage — зберігається після рефрешу ──────────────────────
+  const [mode, setMode] = useState(() =>
+    localStorage.getItem('theme') ?? 'dark'
+  );
+  const [lang, setLang] = useState(() =>
+    localStorage.getItem('lang') ?? 'uk'
+  );
+  const [unit, setUnit] = useState(() =>
+    localStorage.getItem('unit') ?? 'c'
+  );
+  // ──────────────────────────────────────────────────────────────────────────
+
   const [activeTab,  setActiveTab]  = useState('dashboard');
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [lang,       setLang]       = useState('uk');
-  const [unit,       setUnit]       = useState('c');
 
   const t        = useMemo(() => getT(lang), [lang]);
   const theme    = useMemo(() => buildTheme(mode), [mode]);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const toggleTheme = () => setMode((m) => (m === 'dark' ? 'light' : 'dark'));
+  // Зберігаємо в localStorage при кожній зміні
+  const toggleTheme = () => {
+    setMode((m) => {
+      const next = m === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      return next;
+    });
+  };
+
+  const handleLangChange = (val) => {
+    setLang(val);
+    localStorage.setItem('lang', val);
+  };
+
+  const handleUnitChange = (val) => {
+    setUnit(val);
+    localStorage.setItem('unit', val);
+  };
 
   const { data, isLoading, isError } = useWeatherData();
 
@@ -156,7 +182,7 @@ const WeatherApp = () => {
                 {activeTab === 'dashboard' && (
                   <DashboardView data={data} t={t} unit={unit} />
                 )}
-                {activeTab === 'map'      && (
+                {activeTab === 'map' && (
                   <MapView lat={data.lat} lon={data.lon} t={t} />
                 )}
                 {activeTab === 'calendar' && (
@@ -164,11 +190,12 @@ const WeatherApp = () => {
                 )}
                 {activeTab === 'settings' && (
                   <SettingsView
+                    isDark={mode === 'dark'}         // ← передаємо isDark
                     onToggleTheme={toggleTheme}
                     lang={lang}
-                    onLangChange={setLang}
+                    onLangChange={handleLangChange}  // ← з localStorage
                     unit={unit}
-                    onUnitChange={setUnit}
+                    onUnitChange={handleUnitChange}  // ← з localStorage
                     t={t}
                   />
                 )}

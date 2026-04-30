@@ -48,3 +48,8 @@ export const MONTHS = [
   'Січня','Лютого','Березня','Квітня','Травня','Червня',
   'Липня','Серпня','Вересня','Жовтня','Листопада','Грудня',
 ];
+
+export const MONTHS_EN = [
+  'January','February','March','April','May','June',
+  'July','August','September','October','November','December',
+];

@@ -51,7 +51,7 @@ const CustomSelect = ({ value, onChange, options }) => {
             key={opt.value}
             className={`${styles.selectOption} ${isSelected ? styles.selectOptionActive : ''}`}
             onMouseDown={(e) => {
-              e.preventDefault(); // не тригерить blur на кнопці
+              e.preventDefault();
               onChange(opt.value);
               setOpen(false);
             }}
@@ -102,24 +102,49 @@ const Section = ({ title, icon, children }) => (
   </div>
 );
 
-const SettingsView = ({ onToggleTheme, lang, onLangChange, unit, onUnitChange, t }) => {
+// ─────────────────────────────────────────────────────────────────────────────
+// Пропси:
+//   isDark        — boolean, приходить з WeatherApp (mode === 'dark')
+//   onToggleTheme — перемикає тему в батьку + зберігає в localStorage
+//   lang, onLangChange, unit, onUnitChange — аналогічно
+// ─────────────────────────────────────────────────────────────────────────────
+const SettingsView = ({ isDark, onToggleTheme, lang, onLangChange, unit, onUnitChange, t }) => {
   const st = t.settings;
 
-  const [darkMode,     setDarkMode]     = useState(true);
-  const [rainAlert,    setRainAlert]    = useState(true);
-  const [extremeAlert, setExtremeAlert] = useState(true);
+  // Сповіщення — зберігаємо локально + в localStorage
+  const [rainAlert, setRainAlert] = useState(() => {
+    const saved = localStorage.getItem('rainAlert');
+    return saved !== null ? saved === 'true' : true;
+  });
+  const [extremeAlert, setExtremeAlert] = useState(() => {
+    const saved = localStorage.getItem('extremeAlert');
+    return saved !== null ? saved === 'true' : true;
+  });
 
-  const handleDarkToggle = (val) => {
-    setDarkMode(val);
-    onToggleTheme?.();
+  const handleRainAlert = (val) => {
+    setRainAlert(val);
+    localStorage.setItem('rainAlert', String(val));
   };
 
+  const handleExtremeAlert = (val) => {
+    setExtremeAlert(val);
+    localStorage.setItem('extremeAlert', String(val));
+  };
+
+  // Скидання до дефолту
   const handleReset = () => {
-    setDarkMode(true);
-    setRainAlert(true);
-    setExtremeAlert(true);
+    // Тема → темна: якщо зараз світла — перемикаємо
+    if (!isDark) onToggleTheme?.();
+    localStorage.setItem('theme', 'dark');
+
     onUnitChange('c');
+    localStorage.setItem('unit', 'c');
+
     onLangChange('uk');
+    localStorage.setItem('lang', 'uk');
+
+    handleRainAlert(true);
+    handleExtremeAlert(true);
   };
 
   const unitOptions = [
@@ -132,10 +157,11 @@ const SettingsView = ({ onToggleTheme, lang, onLangChange, unit, onUnitChange, t
     { value: 'en', label: st.langEn || 'EN English'    },
   ];
 
+  // isDark замість локального darkMode — завжди синхронізовано з батьком
   const quickStats = [
-    { label: st.theme,    value: darkMode ? st.dark : st.light, icon: darkMode ? '🌙' : '☀️' },
-    { label: st.units,    value: unit === 'c' ? '°C' : '°F',    icon: '🌡️' },
-    { label: st.language, value: lang === 'uk' ? 'UA' : 'EN',   icon: '🌐' },
+    { label: st.theme,    value: isDark ? st.dark : st.light, icon: isDark ? '🌙' : '☀️' },
+    { label: st.units,    value: unit === 'c' ? '°C' : '°F',  icon: '🌡️' },
+    { label: st.language, value: lang === 'uk' ? 'UA' : 'EN', icon: '🌐' },
   ];
 
   return (
@@ -161,7 +187,7 @@ const SettingsView = ({ onToggleTheme, lang, onLangChange, unit, onUnitChange, t
           icon="🌙"
           label={st.darkTheme}
           sub={st.darkThemeSub}
-          control={<Toggle checked={darkMode} onChange={handleDarkToggle} />}
+          control={<Toggle checked={isDark} onChange={() => onToggleTheme?.()} />}
         />
         <Row
           icon="🌡️"
@@ -182,13 +208,13 @@ const SettingsView = ({ onToggleTheme, lang, onLangChange, unit, onUnitChange, t
           icon="🔔"
           label={st.rainAlert}
           sub={st.rainAlertSub}
-          control={<Toggle checked={rainAlert} onChange={setRainAlert} />}
+          control={<Toggle checked={rainAlert} onChange={handleRainAlert} />}
         />
         <Row
           icon="⚡"
           label={st.extremeAlert}
           sub={st.extremeAlertSub}
-          control={<Toggle checked={extremeAlert} onChange={setExtremeAlert} />}
+          control={<Toggle checked={extremeAlert} onChange={handleExtremeAlert} />}
         />
       </Section>
 

@@ -2,15 +2,10 @@ import React, { useState } from 'react';
 
 import { useIsMobile }    from '../../hooks/useIsMobile';
 import { getWeatherInfo } from '../../utils/weatherHelpers';
-import { MONTHS }         from '../../utils/constants';
+import { MONTHS, MONTHS_EN } from '../../utils/constants';
 import styles             from './CalendarView.module.scss';
 
 const TOTAL_CARDS = 14;
-
-const MONTHS_EN = [
-  'January','February','March','April','May','June',
-  'July','August','September','October','November','December',
-];
 
 const toDisplay = (celsius, unit) =>
   unit === 'f' ? Math.round(celsius * 9 / 5 + 32) : Math.round(celsius);
