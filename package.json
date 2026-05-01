@@ -1,6 +1,7 @@
 {
-  "name": "my-weather-app",
+"name": "my-weather-app",
   "version": "0.1.0",
+  "homepage": "https://ValentynDead.github.io/my-weather-app",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -21,11 +22,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+},
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -43,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
