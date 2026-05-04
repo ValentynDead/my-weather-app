@@ -1,0 +1,319 @@
+.wrapper {
+  padding: 20px 0;
+  max-width: 680px;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  width: 100%;
+  color: var(--color-text-primary);
+}
+
+.header { margin-bottom: 32px; }
+
+.overline {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4facfe;
+  font-weight: 700;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+.section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  margin-bottom: 20px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px 10px;
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--color-border);
+
+  &:hover {
+    background: var(--color-surface-hover);
+  }
+
+  &:last-child {
+    border-bottom: none;
+    border-radius: 0 0 24px 24px;
+  }
+}
+
+.rowIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 198, 255, 0.05));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  color: #4facfe;
+}
+
+.rowText { flex: 1; min-width: 0; }
+
+.rowLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.rowSub {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+  margin-top: 1px;
+}
+
+.rowControl {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.customSelect {
+  position: relative;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+}
+
+.selectBtn {
+  min-width: 130px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+
+  &:hover {
+    background: var(--color-surface-hover);
+    border-color: #4facfe;
+  }
+}
+
+.selectBtnOpen {
+  background: var(--color-surface-hover);
+  border-color: rgba(79, 172, 254, 0.6);
+}
+
+.selectArrow {
+  font-size: 9px;
+  color: var(--color-text-muted);
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.selectArrowOpen {
+  transform: rotate(180deg);
+}
+
+.selectDropdown {
+  position: fixed;
+  background: var(--color-paper);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  padding: 6px;
+  z-index: 9999;
+  animation: dropdownIn 0.13s ease;
+}
+
+@keyframes dropdownIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.selectOption {
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:last-child { margin-bottom: 0; }
+
+  &:hover {
+    background: rgba(79, 172, 254, 0.15);
+    color: #4facfe;
+  }
+}
+
+.selectOptionActive {
+  background: rgba(79, 172, 254, 0.2);
+  color: #4facfe;
+  font-weight: 600;
+}
+
+.selectCheck {
+  font-size: 13px;
+  color: #4facfe;
+  width: 16px;
+  text-align: center;
+}
+
+/* --- Перемикачі (Toggles) --- */
+.toggle {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  background: var(--color-icon-bg);
+  border-radius: 20px;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+}
+
+.toggleOn {
+  background: #4facfe;
+  box-shadow: 0 0 15px rgba(79, 172, 254, 0.4);
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: left 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggleKnobOn { left: 23px; }
+
+.statsRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.statChip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+}
+
+.statLabel { color: var(--color-text-secondary); font-weight: 500; }
+.statValue { color: #4facfe; font-weight: 700; }
+
+.versionBadge {
+  background: rgba(79, 172, 254, 0.1);
+  color: #4facfe;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.detailsBtn {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  font-weight: 600;
+  transition: all 0.15s;
+
+  &:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
+  }
+}
+
+.resetBtn {
+  width: 100%;
+  padding: 13px;
+  background: transparent;
+  border: 1px solid rgba(226, 75, 74, 0.35);
+  color: #e24b4a;
+  border-radius: 16px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  font-weight: 600;
+  transition: all 0.18s;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:hover {
+    background: rgba(226, 75, 74, 0.07);
+    border-color: rgba(226, 75, 74, 0.6);
+    box-shadow: 0 4px 16px rgba(226, 75, 74, 0.1);
+  }
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
