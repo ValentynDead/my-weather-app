@@ -22,6 +22,11 @@ import { NAV_ITEMS }      from './utils/constants';
 import { getT }           from './i18n/translations';
 import './WeatherApp.scss';
 
+/**
+ * Builds the application Material-UI theme dynamically based on the mode.
+ * @param {'light' | 'dark'} mode - Current UI theme mode.
+ * @returns {Theme} Material-UI Theme object.
+ */
 const buildTheme = (mode) =>
   createTheme({
     palette: {
@@ -50,6 +55,11 @@ const buildTheme = (mode) =>
     },
   });
 
+// ── Fallback Screens ──────────────────────────────────────────────────────────
+
+/**
+ * Renders the loading screen overlay while fetching weather data.
+ */
 const LoadingScreen = () => (
   <Box className="loading-screen">
     <Box className="loading-orb">☁️</Box>
@@ -59,12 +69,27 @@ const LoadingScreen = () => (
   </Box>
 );
 
-const ErrorScreen = () => (
+/**
+ * Renders the error screen with a fallback reset option.
+ * @param {Function} onReset - Callback to revert to default city.
+ */
+const ErrorScreen = ({ onReset }) => (
   <Box className="error-screen">
     <Typography sx={{ fontSize: 36, mb: 2 }}>⚠️</Typography>
-    <Typography color="error" sx={{ fontSize: 14 }}>
-      Помилка завантаження даних. Перевірте з'єднання.
+    <Typography color="error" sx={{ fontSize: 14, mb: 2 }}>
+      Місто не знайдено або помилка завантаження. Перевірте назву міста.
     </Typography>
+    <Box
+      onClick={onReset}
+      sx={{
+        cursor: 'pointer',
+        color: '#4facfe',
+        fontSize: 14,
+        textDecoration: 'underline',
+      }}
+    >
+      Повернутись до мого міста
+    </Box>
   </Box>
 );
 
@@ -76,6 +101,11 @@ const NAV_ICONS = {
   help:      <HelpOutlineIcon />,
 };
 
+// ── Mobile Navigation ─────────────────────────────────────────────────────────
+
+/**
+ * Renders the bottom navigation bar on mobile devices.
+ */
 const BottomNav = ({ activeTab, setActiveTab, t }) => (
   <Box className="bottom-nav">
     {NAV_ITEMS.map((item) => {
@@ -97,27 +127,26 @@ const BottomNav = ({ activeTab, setActiveTab, t }) => (
   </Box>
 );
 
+// ── Main Application Component ────────────────────────────────────────────────
 const WeatherApp = () => {
-  // ── Стан з localStorage — зберігається після рефрешу ──────────────────────
-  const [mode, setMode] = useState(() =>
-    localStorage.getItem('theme') ?? 'dark'
-  );
-  const [lang, setLang] = useState(() =>
-    localStorage.getItem('lang') ?? 'uk'
-  );
-  const [unit, setUnit] = useState(() =>
-    localStorage.getItem('unit') ?? 'c'
-  );
-  // ──────────────────────────────────────────────────────────────────────────
+  // Localized and persisted state management
+  const [mode, setMode] = useState(() => localStorage.getItem('theme') ?? 'dark');
+  const [lang, setLang] = useState(() => localStorage.getItem('lang')  ?? 'uk');
+  const [unit, setUnit] = useState(() => localStorage.getItem('unit')  ?? 'c');
 
+  // View & UI state management
   const [activeTab,  setActiveTab]  = useState('dashboard');
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [searchCity, setSearchCity] = useState(null);
 
+  // Memoized layout options & translations
   const t        = useMemo(() => getT(lang), [lang]);
   const theme    = useMemo(() => buildTheme(mode), [mode]);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // Зберігаємо в localStorage при кожній зміні
+  /**
+   * Toggles between Light and Dark themes.
+   */
   const toggleTheme = () => {
     setMode((m) => {
       const next = m === 'dark' ? 'light' : 'dark';
@@ -126,27 +155,42 @@ const WeatherApp = () => {
     });
   };
 
+  /**
+   * Updates language and saves setting to LocalStorage.
+   * @param {string} val - New language code.
+   */
   const handleLangChange = (val) => {
     setLang(val);
     localStorage.setItem('lang', val);
   };
 
+  /**
+   * Updates temperature unit and saves setting to LocalStorage.
+   * @param {'c' | 'f'} val - Unit type.
+   */
   const handleUnitChange = (val) => {
     setUnit(val);
     localStorage.setItem('unit', val);
   };
 
-  const { data, isLoading, isError } = useWeatherData();
+  /**
+   * Resets active search back to default user city location.
+   */
+  const handleReset = () => setSearchCity(null);
+
+  // React Query data fetching hook
+  const { data, isLoading, isError } = useWeatherData(lang, searchCity);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       {isLoading && <LoadingScreen />}
-      {isError   && <ErrorScreen />}
+      {isError   && <ErrorScreen onReset={handleReset} />}
 
       {data && (
         <>
+          {/* Mobile Navigation Drawer */}
           <Drawer
             anchor="left"
             open={drawerOpen}
@@ -175,12 +219,19 @@ const WeatherApp = () => {
                 isMobile={isMobile}
                 onMenuOpen={() => setDrawerOpen(true)}
                 onToggleTheme={toggleTheme}
+                onSearch={setSearchCity}
                 t={t}
               />
 
+              {/* View Router Section */}
               <Box className="app-page">
                 {activeTab === 'dashboard' && (
-                  <DashboardView data={data} t={t} unit={unit} />
+                  <DashboardView
+                    data={data}
+                    t={t}
+                    unit={unit}
+                    onCityClick={setSearchCity}
+                  />
                 )}
                 {activeTab === 'map' && (
                   <MapView lat={data.lat} lon={data.lon} t={t} />
@@ -190,13 +241,14 @@ const WeatherApp = () => {
                 )}
                 {activeTab === 'settings' && (
                   <SettingsView
-                    isDark={mode === 'dark'}         // ← передаємо isDark
+                    isDark={mode === 'dark'}
                     onToggleTheme={toggleTheme}
                     lang={lang}
-                    onLangChange={handleLangChange}  // ← з localStorage
+                    onLangChange={handleLangChange}
                     unit={unit}
-                    onUnitChange={handleUnitChange}  // ← з localStorage
+                    onUnitChange={handleUnitChange}
                     t={t}
+                    weatherData={data} // Pass full weather details to settings
                   />
                 )}
                 {activeTab === 'help' && <HelpView t={t} />}

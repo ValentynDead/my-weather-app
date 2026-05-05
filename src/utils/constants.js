@@ -1,9 +1,12 @@
+// ── Popular Cities Coordinates ────────────────────────────────────────────────
 export const OTHER_CITIES_LIST = [
-  { name: 'Лондон',   country: 'UK',    lat: 51.50, lon: -0.12  },
-  { name: 'Нью-Йорк', country: 'USA',   lat: 40.71, lon: -74.00 },
-  { name: 'Токіо',    country: 'Japan', lat: 35.68, lon: 139.76 },
+  { name: 'Лондон',   nameEn: 'London',   country: 'UK',    lat: 51.50, lon: -0.12  },
+  { name: 'Нью-Йорк', nameEn: 'New York', country: 'USA',   lat: 40.71, lon: -74.00 },
+  { name: 'Токіо',    nameEn: 'Tokyo',    country: 'Japan', lat: 35.68, lon: 139.76 },
+  { name: 'Париж',    nameEn: 'Paris',    country: 'France', lat: 48.85, lon: 2.35   },
 ];
 
+// ── Navigation Menu Items ─────────────────────────────────────────────────────
 export const NAV_ITEMS = [
   { id: 'dashboard', label: 'Дашборд'      },
   { id: 'map',       label: 'Карта'        },
@@ -12,6 +15,7 @@ export const NAV_ITEMS = [
   { id: 'help',      label: 'Довідка'      },
 ];
 
+// ── Application Page Titles ───────────────────────────────────────────────────
 export const PAGE_TITLES = {
   dashboard: 'Добрий день',
   map:       'Метеокарта',
@@ -20,6 +24,7 @@ export const PAGE_TITLES = {
   help:      'Довідка',
 };
 
+// ── Weather Map Layer Configs ─────────────────────────────────────────────────
 export const WEATHER_LAYER_LABELS = {
   temp_new:          'Температура',
   precipitation_new: 'Опади',
@@ -44,6 +49,7 @@ export const WEATHER_LAYER_DESCRIPTIONS = {
   wind_new:          'Швидкість вітру',
 };
 
+// ── Localization Date Helpers ─────────────────────────────────────────────────
 export const MONTHS = [
   'Січня','Лютого','Березня','Квітня','Травня','Червня',
   'Липня','Серпня','Вересня','Жовтня','Листопада','Грудня',

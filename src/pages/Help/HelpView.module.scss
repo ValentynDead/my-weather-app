@@ -2,6 +2,8 @@
   max-width: 560px;
 }
 
+/* ── Typography and Labels ───────────────────────────────────────────────────── */
+
 .overline {
   font-size: 11px !important;
   letter-spacing: 0.12em !important;
@@ -18,6 +20,8 @@
   color: var(--color-text-primary) !important;
 }
 
+/* ── Help Item Cards ─────────────────────────────────────────────────────────── */
+
 .card {
   padding: 20px !important;
   margin-bottom: 12px !important;
@@ -26,6 +30,7 @@
   align-items: flex-start;
   transition: transform 0.18s, border-color 0.18s !important;
 
+  /* Provides a subtle shift effect on interactive elements */
   &:hover {
     transform: translateX(4px);
     border-color: #4facfe !important;

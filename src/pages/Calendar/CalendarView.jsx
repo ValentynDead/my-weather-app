@@ -7,9 +7,20 @@ import styles             from './CalendarView.module.scss';
 
 const TOTAL_CARDS = 14;
 
+/**
+ * Converts temperature from Celsius to the requested unit.
+ * @param {number} celsius - Temperature in Celsius.
+ * @param {'c' | 'f'} unit - Targeted display unit.
+ * @returns {number} Converted and rounded temperature value.
+ */
 const toDisplay = (celsius, unit) =>
   unit === 'f' ? Math.round(celsius * 9 / 5 + 32) : Math.round(celsius);
 
+// ── Day Detail View ───────────────────────────────────────────────────────────
+
+/**
+ * Displays detailed information about the currently selected day.
+ */
 const DayDetail = ({ dayIndex, day, isMobile, t }) => {
   if (!day) return null;
   const ct    = t.calendar;
@@ -19,11 +30,13 @@ const DayDetail = ({ dayIndex, day, isMobile, t }) => {
 
   const { icon, desc, cls, tempMax, tempMin } = day;
 
+  // Determine dynamic badge colors based on the weather condition class
   const descColor =
     cls === 'good' ? '#5AB832' :
     cls === 'rain' ? '#4facfe' :
     'rgba(128,128,128,0.7)';
 
+  // Relative labeling for current or adjacent days
   const labelText =
     dayIndex === 0 ? ct.today :
     dayIndex === 1 ? ct.tomorrow :
@@ -65,6 +78,11 @@ const DayDetail = ({ dayIndex, day, isMobile, t }) => {
   );
 };
 
+// ── Day Card ─────────────────────────────────────────────────────────────────
+
+/**
+ * Individual card representing a single day in the forecast grid.
+ */
 const DayCard = ({ index, day, selected, hovered, onSelect, onHover, isMobile, t }) => {
   const ct       = t.calendar;
   const today    = new Date();
@@ -147,6 +165,12 @@ const DayCard = ({ index, day, selected, hovered, onSelect, onHover, isMobile, t
   );
 };
 
+// ── Main Calendar View Component ──────────────────────────────────────────────
+
+/**
+ * Renders the 14-day weather forecast in a grid layout.
+ * Supports active selection and displays high-level daily trends.
+ */
 const CalendarView = ({ data, t, unit }) => {
   const ct       = t.calendar;
   const today    = new Date();
@@ -157,12 +181,17 @@ const CalendarView = ({ data, t, unit }) => {
   const daily = data?.daily;
   const days  = daily ? daily.time.length : 0;
 
+  /**
+   * Compiles and converts forecast data for a specific day index.
+   * @param {number} i - Day offset index.
+   * @returns {Object|null} Formatted weather information or null if out of range.
+   */
   const getDayData = (i) => {
     if (!daily || i >= days) return null;
     const info = getWeatherInfo(daily.weather_code[i], t.weather);
     return {
       ...info,
-      // конвертуємо одразу при побудові даних
+      // Converts values during mapping to maintain precise presentation data
       tempMax: toDisplay(daily.temperature_2m_max[i], unit),
       tempMin: toDisplay(daily.temperature_2m_min[i], unit),
     };

@@ -1,70 +1,76 @@
 .strip {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   overflow-x: auto;
   overflow-y: visible;
-  padding-bottom: 12px;
-  padding-top: 6px;      
+  padding-bottom: 8px;
+  padding-top: 4px;
   scrollbar-width: none;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  /* Hides scrollbar for Chrome, Safari, and Opera */
+  &::-webkit-scrollbar { display: none; }
 }
 
+/* ── Forecast Day Cards ──────────────────────────────────────────────────────── */
+
 .card {
-  padding: 16px;
+  padding: 16px 10px;
   min-width: 96px;
-  flex: 0 0 auto;
+  flex: 1 1 0;
+  max-width: 140px;
   text-align: center;
   border: 1px solid var(--color-divider) !important;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
   transition: transform 0.18s, box-shadow 0.18s;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(79, 172, 254, 0.15) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(79,172,254,0.15) !important;
   }
 }
 
-.today {
+.selected {
   border: 1.5px solid #4facfe !important;
-  background: rgba(79, 172, 254, 0.07) !important;
+  background: rgba(79,172,254,0.09) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79,172,254,0.18) !important;
+}
+
+.today {
+  border: 1.5px solid rgba(79,172,254,0.5) !important;
 }
 
 .topLine {
   position: absolute;
-  top: 0;
-  left: 15%;
-  right: 15%;
+  top: 0; left: 15%; right: 15%;
   height: 2px;
   background: linear-gradient(90deg, transparent, #4facfe, transparent);
 }
 
+/* ── Typography & Elements ───────────────────────────────────────────────────── */
+
 .dayLabel {
   font-weight: 700 !important;
+  font-size: 12px !important;
   display: block;
-  font-size: 11px !important;
+  color: var(--color-text-secondary);
+  text-transform: capitalize;
 }
 
-.emoji {
-  font-size: 28px !important;
-  margin: 8px 0;
-}
+.emoji  { font-size: 30px !important; line-height: 1 !important; }
+.tempMax { font-weight: 900 !important; font-size: 16px !important; color: var(--color-text-primary) !important; }
+.tempMin { font-size: 12px !important; color: var(--color-text-secondary) !important; }
 
-.tempMax {
-  font-weight: 900 !important;
-  font-size: 15px !important;
-}
-
-.tempMin {
-  font-size: 11px !important;
-}
+/* ── Responsive Mobile Media Queries ─────────────────────────────────────────── */
 
 @media (max-width: 600px) {
-  .card { min-width: 72px; padding: 10px; }
-  .emoji { font-size: 22px !important; }
+  .card    { min-width: 72px; padding: 10px 6px; }
+  .emoji   { font-size: 22px !important; }
   .tempMax { font-size: 13px !important; }
 }

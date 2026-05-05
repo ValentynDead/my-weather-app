@@ -26,6 +26,16 @@
   color: var(--color-text-primary);
 }
 
+.notifWarning {
+  margin: 0 16px 8px;
+  padding: 10px 14px;
+  background: rgba(255, 180, 0, 0.08);
+  border: 1px solid rgba(255, 180, 0, 0.25);
+  border-radius: 12px;
+  font-size: 13px;
+  color: #ffb400;
+}
+
 .subtitle {
   font-size: 14px;
   color: var(--color-text-secondary);
@@ -107,6 +117,8 @@
   flex-shrink: 0;
   position: relative;
 }
+
+/* ── Custom UI Select Component ──────────────────────────────────────────────── */
 
 .customSelect {
   position: relative;
@@ -204,7 +216,8 @@
   text-align: center;
 }
 
-/* --- Перемикачі (Toggles) --- */
+/* ── Toggle Switch Designs ───────────────────────────────────────────────────── */
+
 .toggle {
   position: relative;
   width: 46px;
@@ -234,6 +247,8 @@
 }
 
 .toggleKnobOn { left: 23px; }
+
+/* ── General Statistics & Details ────────────────────────────────────────────── */
 
 .statsRow {
   display: flex;
@@ -316,4 +331,103 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+}
+
+// ── Settings License Modal Overlay & Box ──────────────────────────────────────
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalBox {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 420px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalIn 0.18s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.modalClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  padding: 4px 8px;
+  border-radius: 8px;
+  line-height: 1;
+  transition: background 0.15s;
+
+  &:hover {
+    background: var(--color-surface-hover);
+  }
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modalTitle {
+  font-weight: 700;
+  font-size: 14px;
+  color: #4facfe;
+  margin: 0;
+}
+
+.modalText {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.modalBtn {
+  align-self: flex-end;
+  padding: 8px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  font-weight: 600;
+  transition: all 0.15s;
+
+  &:hover {
+    background: var(--color-surface-hover);
+    border-color: #4facfe;
+    color: #4facfe;
+  }
 }

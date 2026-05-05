@@ -1,10 +1,12 @@
 .grid {
   animation: fadeIn 0.4s;
+  align-items: stretch !important;  // Ensures column heights match across the grid
+  min-height: calc(100vh - 120px);  // Occupies full available screen height
 }
 
 .sectionLabel {
   font-weight: 800 !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase;
   color: var(--color-text-secondary) !important;
@@ -13,31 +15,39 @@
   padding: 0 2px;
 }
 
+.stickyCol {
+  position: sticky;
+  top: 20px;
+}
+
+.rightCol {
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Main Weather Card Design ──────────────────────────────────────────────────
+
 .mainCard {
   padding: 28px !important;
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, rgba(0, 198, 255, 0.04) 50%, transparent 100%) !important;
+  background: linear-gradient(135deg, rgba(79,172,254,0.1) 0%, rgba(0,198,255,0.04) 50%, transparent 100%) !important;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 40px rgba(79, 172, 254, 0.08) !important;
+  box-shadow: 0 4px 40px rgba(79,172,254,0.08) !important;
 }
 
 .mainCardTopLine {
   position: absolute;
-  top: 0;
-  left: 10%;
-  right: 10%;
+  top: 0; left: 10%; right: 10%;
   height: 2px;
   background: linear-gradient(90deg, transparent, #4facfe, transparent);
 }
 
 .mainCardOrb {
   position: absolute;
-  top: -40px;
-  right: -40px;
-  width: 140px;
-  height: 140px;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(79, 172, 254, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(79,172,254,0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -45,80 +55,89 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .weekday {
   font-weight: 700 !important;
-  font-size: 15px !important;
+  font-size: 17px !important;
   text-transform: capitalize;
   color: var(--color-text-primary) !important;
 }
 
 .unitBadge {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
-  padding: 3px 12px;
+  padding: 4px 12px;
   border-radius: 8px;
-  background: rgba(79, 172, 254, 0.15);
+  background: rgba(79,172,254,0.15);
   color: #4facfe;
   letter-spacing: 0.06em;
 }
 
 .dateStr {
-  margin-bottom: 24px !important;
+  margin-bottom: 22px !important;
   font-size: 13px !important;
+  color: var(--color-text-secondary) !important;
 }
 
 .mainCardBody {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
 }
 
 .weatherIcon {
-  width: 85px;
-  filter: drop-shadow(0 4px 16px rgba(79, 172, 254, 0.35));
+  width: 100px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 16px rgba(79,172,254,0.35));
 }
 
 .tempBlock {
   text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
 }
 
 .temperature {
-  font-size: 62px !important;
+  font-size: 72px !important;
   font-weight: 900 !important;
   line-height: 1 !important;
-  letter-spacing: -2px !important;
+  letter-spacing: -3px !important;
   color: var(--color-text-primary) !important;
 }
 
 .weatherLabel {
-  margin-top: 4px !important;
   font-weight: 600 !important;
-  font-size: 14px !important;
+  font-size: 15px !important;
+  color: var(--color-text-secondary) !important;
 }
 
+// ── Alternative Cities ────────────────────────────────────────────────────────
+
 .cityCard {
-  padding: 14px !important;
+  padding: 14px 16px !important;
   display: flex !important;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
   transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s !important;
 
+  /* Subtle right shift on interactive hover */
   &:hover {
-    transform: translateX(6px);
+    transform: translateX(4px);
     border-color: #4facfe !important;
-    box-shadow: 0 4px 20px rgba(79, 172, 254, 0.12) !important;
+    box-shadow: 0 4px 16px rgba(79,172,254,0.12) !important;
   }
 }
 
 .cityEmoji {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
-  background: rgba(79, 172, 254, 0.08);
+  background: rgba(79,172,254,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,9 +158,71 @@
   color: var(--color-text-primary) !important;
 }
 
+// ── Day Detail Extended Panel ─────────────────────────────────────────────────
+
+.dayDetail {
+  padding: 20px 24px !important;
+  border-radius: 18px !important;
+  animation: fadeIn 0.25s ease;
+  background: linear-gradient(135deg, rgba(79,172,254,0.07) 0%, rgba(0,198,255,0.02) 100%) !important;
+  border: 1px solid rgba(79,172,254,0.15) !important;
+  box-shadow: 0 4px 24px rgba(79,172,254,0.06) !important;
+  flex: 1;  // Extends to occupy all available vertical space
+}
+
+.dayDetailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(79,172,254,0.1);
+}
+
+.dayDetailLeft { flex: 1; }
+
+.dayDetailTitle {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: var(--color-text-primary) !important;
+  text-transform: capitalize;
+  line-height: 1.2 !important;
+}
+
+.dayDetailWeather {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.emoji2 {
+  font-size: 42px !important;
+  line-height: 1 !important;
+}
+
+.dayDetailTemps {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.dayDetailMax {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #4facfe !important;
+  letter-spacing: -0.5px;
+}
+
+.center { justify-content: center; }
+
+// ── Responsive Media Queries ──────────────────────────────────────────────────
+
 @media (max-width: 600px) {
-  .mainCard { padding: 20px !important; }
-  .weatherIcon { width: 60px; }
-  .temperature { font-size: 48px !important; }
-  .cityTemp { font-size: 17px !important; }
+  .mainCard     { padding: 18px !important; }
+  .weatherIcon  { width: 64px; }
+  .temperature  { font-size: 52px !important; }
+  .cityTemp     { font-size: 17px !important; }
+  .dayDetailMax { font-size: 22px !important; }
+  .emoji2       { font-size: 30px !important; }
 }

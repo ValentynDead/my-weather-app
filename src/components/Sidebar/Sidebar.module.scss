@@ -9,6 +9,8 @@
   flex-shrink: 0;
 }
 
+/* ── Responsive Modifiers ────────────────────────────────────────────────────── */
+
 .desktop {
   width: 68px;
   height: auto;
@@ -21,6 +23,8 @@
   border-radius: 0;
   height: 100%;
 }
+
+/* ── Branding ────────────────────────────────────────────────────────────────── */
 
 .logo {
   width: 32px;
@@ -57,6 +61,8 @@
   font-size: 15px !important;
   color: var(--color-text-primary) !important;
 }
+
+/* ── Navigation Items ────────────────────────────────────────────────────────── */
 
 .navItem {
   display: flex;
@@ -102,6 +108,8 @@
   font-size: 14px !important;
   color: inherit !important;
 }
+
+/* ── Active View Indicator for Desktop ───────────────────────────────────────── */
 
 .activeIndicator {
   position: absolute;

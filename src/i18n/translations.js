@@ -1,3 +1,6 @@
+// ── Translation Dictionary ───────────────────────────────────────────────────
+// Contains all localized strings used across the application for both 
+// Ukrainian (uk) and English (en) locales.
 export const translations = {
   uk: {
     nav: {
@@ -20,6 +23,7 @@ export const translations = {
       popularCities:  'Популярні міста',
       todayMetrics:   'Показники сьогодні',
       weekForecast:   'Прогноз на тиждень',
+      dayDetail:      'Показники дня',
       today:          'Сьогодні',
       feelsLike:      'Відчувається як',
       wind:           'Вітер',
@@ -31,19 +35,21 @@ export const translations = {
     },
 
     map: {
-      realData:    'Реальні дані',
-      title:       'Метеорологічна мапа',
-      subtitle:    'Погодні шари в реальному часі',
-      live:        'LIVE',
-      temperature: 'Температура',
-      precipitation:'Опади',
-      wind:        'Вітер',
-      tempDesc:    'Розподіл температур',
-      precipDesc:  'Кількість опадів',
-      windDesc:    'Швидкість вітру',
-      min:         'Мін',
-      max:         'Макс',
-      yourLocation:'Ваша локація',
+      realData:     'Реальні дані',
+      title:        'Метеорологічна мапа',
+      subtitle:     'Погодні шари в реальному часі',
+      live:         'LIVE',
+      temperature:  'Температура',
+      precipitation:'Радар опадів',
+      wind:         'Вітер',
+      clouds:       'Хмарність',
+      tempDesc:     'Розподіл температур поверхні',
+      precipDesc:   'Анімований радар опадів • RainViewer',
+      windDesc:     'Швидкість та напрямок вітру',
+      cloudsDesc:   'Хмарний покрив над поверхнею землі',
+      min:          'Мін',
+      max:          'Макс',
+      yourLocation: 'Ваша локація',
     },
 
     calendar: {
@@ -117,7 +123,7 @@ export const translations = {
 
     weather: {
       clear:          'Ясно',
-      partlyCloudy:   'Хмарно',
+      partlyCloudy:   'Мінлива хмарність',
       cloudy:         'Хмарно',
       rain:           'Дощ',
       clearSunny:     'Ясно та сонячно',
@@ -136,21 +142,21 @@ export const translations = {
     },
 
     cities: {
-      'Cherkasy':      'Черкаси',
-      'Kyiv':          'Київ',
-      'Kharkiv':       'Харків',
-      'Odessa':        'Одеса',
-      'Dnipro':        'Дніпро',
-      'Lviv':          'Львів',
-      'Zaporizhzhia':  'Запоріжжя',
-      'Mykolaiv':      'Миколаїв',
-      'Vinnytsia':     'Вінниця',
-      'Poltava':       'Полтава',
-      'London':        'Лондон',
-      'New York':      'Нью-Йорк',
-      'Tokyo':         'Токіо',
-      'Paris':         'Париж',
-      'Berlin':        'Берлін',
+      'Cherkasy':     'Черкаси',
+      'Kyiv':         'Київ',
+      'Kharkiv':      'Харків',
+      'Odessa':       'Одеса',
+      'Dnipro':       'Дніпро',
+      'Lviv':         'Львів',
+      'Zaporizhzhia': 'Запоріжжя',
+      'Mykolaiv':     'Миколаїв',
+      'Vinnytsia':    'Вінниця',
+      'Poltava':      'Полтава',
+      'London':       'Лондон',
+      'New York':     'Нью-Йорк',
+      'Tokyo':        'Токіо',
+      'Paris':        'Париж',
+      'Berlin':       'Берлін',
     },
 
     locale: 'uk-UA',
@@ -177,6 +183,7 @@ export const translations = {
       popularCities: 'Popular cities',
       todayMetrics:  'Today\'s metrics',
       weekForecast:  'Week forecast',
+      dayDetail:     'Day details',
       today:         'Today',
       feelsLike:     'Feels like',
       wind:          'Wind',
@@ -188,19 +195,21 @@ export const translations = {
     },
 
     map: {
-      realData:    'Live data',
-      title:       'Weather Map',
-      subtitle:    'Real-time weather layers',
-      live:        'LIVE',
-      temperature: 'Temperature',
-      precipitation:'Precipitation',
-      wind:        'Wind',
-      tempDesc:    'Temperature distribution',
-      precipDesc:  'Precipitation amount',
-      windDesc:    'Wind speed',
-      min:         'Min',
-      max:         'Max',
-      yourLocation:'Your location',
+      realData:     'Live data',
+      title:        'Weather Map',
+      subtitle:     'Real-time weather layers',
+      live:         'LIVE',
+      temperature:  'Temperature',
+      precipitation:'Rain Radar',
+      wind:         'Wind',
+      clouds:       'Clouds',
+      tempDesc:     'Surface temperature distribution',
+      precipDesc:   'Animated precipitation radar • RainViewer',
+      windDesc:     'Wind speed and direction',
+      cloudsDesc:   'Cloud cover over the surface',
+      min:          'Min',
+      max:          'Max',
+      yourLocation: 'Your location',
     },
 
     calendar: {
@@ -292,26 +301,32 @@ export const translations = {
       searchPlaceholder: 'Search location…',
     },
 
-    cities: {},
+    cities: {
+      'London':   'London',
+      'New York': 'New York',
+      'Tokyo':    'Tokyo',
+      'Paris':    'Paris',
+      'Berlin':   'Berlin',
+    },
 
     locale: 'en-US',
   },
 };
 
 /**
- * Returns the translation object for the given language.
- * Falls back to Ukrainian if lang is not found.
- * @param {'uk'|'en'} lang
- * @returns {typeof translations.uk}
+ * Returns the dictionary object corresponding to the provided language code.
+ * Falls back to Ukrainian if the language key is not found.
+ * @param {string} lang - Active application language code.
+ * @returns {Object} Translation dictionary.
  */
 export const getT = (lang) => translations[lang] ?? translations.uk;
 
 /**
- * Translates a city name using the current language's cities map.
- * Falls back to the original name if no translation found.
- * @param {string} cityName
- * @param {typeof translations.uk} t
- * @returns {string}
+ * Helper to translate raw city names using the active locale's cities dictionary.
+ * Falls back to the raw name if no translation exists.
+ * @param {string} cityName - Original city name key.
+ * @param {Object} t - Active locale's translation dictionary.
+ * @returns {string} Translated or original city name.
  */
 export const translateCity = (cityName, t) =>
   (t.cities && t.cities[cityName]) || cityName;

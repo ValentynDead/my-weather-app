@@ -3,6 +3,8 @@
   font-family: 'DM Sans', sans-serif;
 }
 
+/* ── View Header & Status ────────────────────────────────────────────────────── */
+
 .header {
   display: flex;
   align-items: flex-end;
@@ -50,7 +52,8 @@
   flex-shrink: 0;
 }
 
-/* ── Day detail panel ── */
+/* ── Selected Day Detail Panel ───────────────────────────────────────────────── */
+
 .detail {
   background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, rgba(0, 198, 255, 0.04) 100%);
   border: 1px solid rgba(79, 172, 254, 0.25);
@@ -99,13 +102,14 @@
   font-weight: 600;
 }
 
+/* ── Calendar Grid & Day Card Designs ────────────────────────────────────────── */
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 10px;
 }
 
-/* ── Day card ── */
 .dayCard {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -155,6 +159,8 @@
   background: linear-gradient(90deg, transparent, #4facfe, transparent);
 }
 
+/* ── Day Card Metadata & Badges ─────────────────────────────────────────────── */
+
 .badge {
   font-size: 10px;
   font-weight: 800;
@@ -183,6 +189,8 @@
 
 .emptyPlaceholder { font-size: 22px; color: var(--color-text-faint); }
 
+/* ── Mobile Map & Layout Legend ─────────────────────────────────────────────── */
+
 .mobileLegend {
   display: flex;
   gap: 12px;
@@ -194,6 +202,8 @@
 .legendItem { display: flex; align-items: center; gap: 6px; }
 .legendDot  { width: 7px; height: 7px; border-radius: 50%; }
 .legendLabel{ font-size: 11px; color: var(--color-text-secondary); }
+
+/* ── Responsive Mobile Media Queries ─────────────────────────────────────────── */
 
 @media (max-width: 600px) {
   .grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
